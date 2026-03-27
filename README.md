@@ -8,8 +8,8 @@
 
 ### 传统量化的痛点
 
-在没有 AI 之前，传统量化交易存在以下问题：
-- 一些模糊且主观性的交易规则难以程序标准化
+在没有 AI 模型支持 之前，传统量化交易存在以下问题：
+- 一些视觉化且主观性的交易规则难以程序标准化
 - 例如：头肩顶形态、筑底迹象、盘整比较久、布林带收窄走平等形态识别
 - 需要编写大量代码来实现这些规则，且难以快速验证和迭代
 
@@ -19,7 +19,8 @@
 
 - 使用**自然语言编写交易规则**，无需懂得编程
 - Agent 根据交易规则**自行调用工具**完成任务
-- 通过修改交易规则，即可快速验证新的交易策略
+- 通过修改交易规则，即可快速验证新的交易策略，无需重新编写复杂的量化程序代码
+注：本项目必须在支持视觉理解的 AI 模型上运行，如国产的Doubao-Seed-2.0-pro，Qwen-3.5-Plus。
 
 ### 核心特性
 
@@ -40,10 +41,6 @@
 > � 如果这个项目对你有帮助，欢迎在 GitHub 点星支持！星数越多，我们将更有动力开发更多交易所对接。
 
 ## 系统架构
-
-<p align="center">
-  <img src="img/img2.jpg" alt="Architecture" width="800"/>
-</p>
 
 本项目采用前后端分离架构：
 
@@ -91,32 +88,37 @@ cp .env.example .env
 
 ## 使用指南
 
-### 1. 添加交易账户
+### 1. 配置 AI 模型
+
+<p align="center">
+  <img src="img/img2.jpg" alt="Architecture" width="800"/>
+</p>
+
+> ⚠️ **重要**: 必须使用具有**图片理解能力**的模型（如 GPT-4V、Claude Vision、Moonshot K2.5 、Doubao-Seed-2.0-pro、Qwen-3.5-Plus 等），因为 Agent 需要读取 K 线图表。
+
+进入「模型设置」页：
+- 点击「添加模型」
+- 输入模型名称、Base URL、API Key
+- 点击「测试连通性」验证模型是否成功连接
+- 设为默认模型（可选）
+
+### 2. 添加交易账户
 
 <p align="center">
   <img src="img/img3.jpg" alt="Account Settings" width="800"/>
 </p>
 
-进入「账户设置」页：
+进入「交易账户」页：
 - 点击「添加账户」
 - 选择交易所、填写 API Key、API Secret
 - 选择实盘或模拟交易
-
-### 2. 配置 AI 模型
-
-<p align="center">
-  <img src="img/img4.jpg" alt="Model Settings" width="800"/>
-</p>
-
-> ⚠️ **重要**: 必须使用具有**图片理解能力**的模型（如 GPT-4V、Claude Vision、Moonshot K2.5 等），因为 Agent 需要读取 K 线图表。
-
-进入「模型设置」页：
-- 点击「添加模型」
-- 输入模型名称、Base URL、API Key
-- 点击「测试连接」验证
-- 设为默认模型
+- 点击「测试连通性」验证账户是否成功连接
 
 ### 3. 创建交易任务
+
+<p align="center">
+  <img src="img/img4.jpg" alt="Task Manager" width="800"/>
+</p>
 
 <p align="center">
   <img src="img/img5.jpg" alt="Task Manager" width="800"/>
@@ -170,6 +172,19 @@ CryptoAgent/
 - **前端**: React, TypeScript, React Query
 - **AI**: OpenAI Compatible API (支持多模态的模型)
 - **交易所**: OKX, Binance
+
+## 未来展望
+
+如果这个项目受到大家的欢迎（收获大量 GitHub ⭐），我们将持续扩展更多功能：
+
+- 🌍 **更多交易所支持** - 增加对 Bybit、Bitget、OKX/Binance 合约以外的交易品类支持
+- 💎 **现货交易** - 支持现货市场的自动交易
+- 📝 **更多交易操作** - 支持设置/修改挂单、止盈止损、风控参数等
+- 📢 **交易通知** - 支持 Telegram、飞书、钉钉等消息推送，实时通知交易状态
+- 📊 **更丰富的图表分析** - 支持更多时间周期和技术指标图表
+- 🎯 **策略回测** - 支持基于历史数据回测交易策略
+
+---
 
 ## 免责声明
 
