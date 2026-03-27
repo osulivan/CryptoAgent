@@ -174,7 +174,8 @@ CryptoAgent/
 │   ├── llm/          # LLM 适配器
 │   └── shared/       # 共享代码
 ├── frontend/         # React 前端
-├── data/             # JSON 数据存储
+├── data/             # JSON 数据存储（在web面板配置相关设置后自动生成）
+├── charts/           # K线图表存储（执行任务后自动生成）
 ├── img/              # 项目截图
 ├── start.sh          # 启动脚本
 ├── stop.sh           # 停止脚本
