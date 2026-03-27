@@ -1,25 +1,55 @@
 # CryptoAgent - AI 数字货币交易助手
 
-基于 ReAct 架构的 AI Agent 数字货币交易助手，支持自动化交易决策。
+<p align="center">
+  <img src="img/img1.jpg" alt="CryptoAgent Dashboard" width="800"/>
+</p>
 
-## 功能特性
+## 背景与目的
 
-- 🤖 **AI Agent 交易决策** - 基于 ReAct 架构的智能交易助手
-- 📊 **多时间框架分析** - 支持 15m、1H、4H 等多个时间框架
-- 📈 **技术指标分析** - 布林带、RSI、MA、MACD、KDJ 等技术指标
-- ⏰ **定时任务调度** - 支持多种时间间隔的自动分析
-- 📱 **Web 管理界面** - 直观的任务管理和执行历史查看
-- 🔑 **多模型支持** - 支持配置多个 AI 模型并切换使用
-- 💰 **Token 使用统计** - 详细的 Token 消耗统计
-- 🔒 **模拟交易** - 支持模拟盘交易，测试策略零风险
+### 传统量化的痛点
 
-## 架构说明
+在没有 AI 之前，传统量化交易存在以下问题：
+- 一些模糊且主观性的交易规则难以程序标准化
+- 例如：头肩顶形态、筑底迹象、盘整比较久、布林带收窄走平等形态识别
+- 需要编写大量代码来实现这些规则，且难以快速验证和迭代
+
+### 我们的解决方案
+
+随着 AI 模型能力的快速迭代，特别是**多模态能力**（视觉理解）的出现，让我们可以：
+
+- 使用**自然语言编写交易规则**，无需懂得编程
+- Agent 根据交易规则**自行调用工具**完成任务
+- 通过修改交易规则，即可快速验证新的交易策略
+
+### 核心特性
+
+- 🤖 **自然语言交易规则** - 用日常语言描述你的交易策略
+- �️ **K线图表理解** - Agent 能够读取并分析 K 线图表（需要支持视觉的模型）
+- � **内置工具集** - 提供行情数据、图表生成、账户管理等工具
+- ⏰ **定时自动执行** - 支持多种时间间隔的自动交易
+- 📱 **Web 管理界面** - 直观的可视化管理
+
+### 支持的交易所
+
+| 交易所 | 实盘 | 模拟盘 | 状态 |
+|--------|------|--------|------|
+| OKX | ✅ | ✅ | 已支持 |
+| Binance | ✅ | ✅ | 已支持 |
+| Bybit | ⏳ | ⏳ | 待开发 |
+
+> � 如果这个项目对你有帮助，欢迎在 GitHub 点星支持！星数越多，我们将更有动力开发更多交易所对接。
+
+## 系统架构
+
+<p align="center">
+  <img src="img/img2.jpg" alt="Architecture" width="800"/>
+</p>
 
 本项目采用前后端分离架构：
 
-- **API 服务** (端口 8000): 提供 Web API，管理任务、账户、模型配置
-- **Agent 服务** (端口 8001): 负责执行交易任务，定时调度
-- **前端**: React + TypeScript，提供用户界面
+- **API 服务** (端口 8000): Web API，管理任务、账户、模型配置
+- **Agent 服务** (端口 8001): 执行交易任务，定时调度
+- **前端**: React + TypeScript，用户界面
 
 ## 快速开始
 
@@ -36,7 +66,7 @@
 git clone https://github.com/osulivan/CryptoAgent.git
 cd CryptoAgent
 
-# 2. 一键安装（会自动创建虚拟环境并安装依赖）
+# 2. 一键安装
 ./install.sh
 ```
 
@@ -54,34 +84,31 @@ cp .env.example .env
 ### 启动服务
 
 ```bash
-# 开发模式启动（使用 npm run dev）
-./start.sh dev
-
-# 生产模式启动（使用构建后的静态文件）
-./start.sh prod
+./start.sh
 ```
 
-服务启动后访问：
-- 前端: http://localhost:5173
-- API: http://localhost:8000
-- Agent: http://localhost:8001
-
-### 停止服务
-
-```bash
-./stop.sh
-```
+服务启动后访问 **http://localhost:5173**
 
 ## 使用指南
 
 ### 1. 添加交易账户
 
+<p align="center">
+  <img src="img/img3.jpg" alt="Account Settings" width="800"/>
+</p>
+
 进入「账户设置」页：
 - 点击「添加账户」
-- 填写交易所、API Key、API Secret
-- 选择是否模拟交易
+- 选择交易所、填写 API Key、API Secret
+- 选择实盘或模拟交易
 
 ### 2. 配置 AI 模型
+
+<p align="center">
+  <img src="img/img4.jpg" alt="Model Settings" width="800"/>
+</p>
+
+> ⚠️ **重要**: 必须使用具有**图片理解能力**的模型（如 GPT-4V、Claude Vision、Moonshot K2.5 等），因为 Agent 需要读取 K 线图表。
 
 进入「模型设置」页：
 - 点击「添加模型」
@@ -91,41 +118,59 @@ cp .env.example .env
 
 ### 3. 创建交易任务
 
+<p align="center">
+  <img src="img/img5.jpg" alt="Task Manager" width="800"/>
+</p>
+
 进入「交易任务」页：
 - 点击「添加任务」
 - 选择交易账户和 AI 模型
 - 设置交易品种（如 BTC-USDT-SWAP）
-- 编写交易规则（提示词）
+- **编写交易规则**（用自然语言描述）
 - 选择执行间隔
-- 保存任务
 
-### 4. 运行任务
+### 4. 查看执行历史
 
-- **手动执行**: 点击任务列表中的「执行」按钮
-- **定时执行**: 编辑任务，启用「定时执行」
+<p align="center">
+  <img src="img/img6.jpg" alt="Execution History" width="800"/>
+</p>
+
+<p align="center">
+  <img src="img/img7.jpg" alt="Execution Detail" width="800"/>
+</p>
+
+进入「执行历史」页：
+- 查看每次执行的详细信息
+- 查看 Agent 的决策过程和工具调用日志
+- 分析交易结果和 Token 消耗
 
 ## 项目结构
 
 ```
 CryptoAgent/
 ├── src/
-│   ├── web/          # API 服务
-│   ├── agent/        # AI Agent 核心逻辑
+│   ├── web/           # API 服务
+│   ├── agent/         # AI Agent 核心逻辑
 │   ├── agent_service/ # Agent 服务（调度器、执行器）
-│   ├── exchange/    # 交易所接口
-│   ├── chart/       # K线图生成
-│   ├── llm/         # LLM 适配器
-│   └── shared/      # 共享代码
+│   ├── exchange/      # 交易所接口
+│   ├── chart/        # K线图生成
+│   ├── llm/          # LLM 适配器
+│   └── shared/       # 共享代码
 ├── frontend/         # React 前端
-├── data/            # JSON 数据存储
-├── start.sh         # 启动脚本
-├── stop.sh          # 停止脚本
-└── install.sh       # 安装脚本
+├── data/             # JSON 数据存储
+├── img/              # 项目截图
+├── start.sh          # 启动脚本
+├── stop.sh           # 停止脚本
+└── install.sh        # 安装脚本
 ```
 
 ## 技术栈
 
 - **后端**: Python, FastAPI, APScheduler, aiohttp
-- **前端**: React, TypeScript, React Query, TailwindCSS
-- **AI**: OpenAI Compatible API
-- **交易所**: 目前支持Binance, OKX；待支持：Bybit
+- **前端**: React, TypeScript, React Query
+- **AI**: OpenAI Compatible API (支持多模态的模型)
+- **交易所**: OKX, Binance
+
+## 免责声明
+
+本项目仅供学习和研究使用，实盘交易存在风险，请谨慎使用。

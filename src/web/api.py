@@ -778,25 +778,39 @@ async def get_execution_stats():
     executions = load_json_file(EXECUTIONS_FILE, [])
 
     today = datetime.now().date()
-    today_executions = [
-        e for e in executions
-        if datetime.fromisoformat(e.get('startTime', '1970-01-01')).date() == today
-    ]
+    today_executions = []
+    for e in executions:
+        try:
+            start_time = e.get('startTime', '1970-01-01')
+            start_date = datetime.fromisoformat(start_time).date()
+            if start_date == today:
+                today_executions.append(e)
+        except (ValueError, TypeError):
+            continue
 
     total_tokens = {"input": 0, "output": 0, "total": 0}
     for execution in executions:
         exec_tokens = execution.get("totalTokens", {})
-        total_tokens["input"] += exec_tokens.get("input", 0)
-        total_tokens["output"] += exec_tokens.get("output", 0)
-        total_tokens["total"] += exec_tokens.get("total", 0)
+        if isinstance(exec_tokens, dict):
+            total_tokens["input"] += exec_tokens.get("input", 0)
+            total_tokens["output"] += exec_tokens.get("output", 0)
+            total_tokens["total"] += exec_tokens.get("total", 0)
+
+    def get_decision(e):
+        fd = e.get('finalDecision')
+        if fd is None:
+            return None
+        if isinstance(fd, dict):
+            return fd.get('decision')
+        return None
 
     return {
         "totalExecutions": len(today_executions),
         "completedExecutions": len([e for e in today_executions if e.get('status') == 'completed']),
         "failedExecutions": len([e for e in today_executions if e.get('status') == 'failed']),
-        "buyDecisions": len([e for e in today_executions if e.get('finalDecision', {}).get('decision') == 'BUY']),
-        "sellDecisions": len([e for e in today_executions if e.get('finalDecision', {}).get('decision') == 'SELL']),
-        "holdDecisions": len([e for e in today_executions if e.get('finalDecision', {}).get('decision') == 'HOLD']),
+        "buyDecisions": len([e for e in today_executions if get_decision(e) == 'BUY']),
+        "sellDecisions": len([e for e in today_executions if get_decision(e) == 'SELL']),
+        "holdDecisions": len([e for e in today_executions if get_decision(e) == 'HOLD']),
         "totalTokens": total_tokens,
     }
 
