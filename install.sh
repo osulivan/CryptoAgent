@@ -128,11 +128,13 @@ echo ""
 
 # 创建虚拟环境
 echo -e "${YELLOW}📦 创建 Python 虚拟环境...${NC}"
-if [ ! -d "venv" ]; then
+FORCE_RECREATE=${FORCE_RECREATE:-false}
+if [ ! -d "venv" ] || [ "$FORCE_RECREATE" = "true" ]; then
+    rm -rf venv
     $PYTHON_CMD -m venv venv
     echo -e "${GREEN}✓ 虚拟环境创建完成${NC}"
 else
-    echo -e "${GREEN}✓ 虚拟环境已存在${NC}"
+    echo -e "${GREEN}✓ 虚拟环境已存在（跳过）${NC}"
 fi
 
 # 激活虚拟环境
