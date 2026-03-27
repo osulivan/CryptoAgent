@@ -33,7 +33,7 @@
 
 ```bash
 # 1. 克隆项目
-git clone <your-repo-url>
+git clone https://github.com/osulivan/CryptoAgent.git
 cd CryptoAgent
 
 # 2. 一键安装（会自动创建虚拟环境并安装依赖）
@@ -128,4 +128,4 @@ CryptoAgent/
 - **后端**: Python, FastAPI, APScheduler, aiohttp
 - **前端**: React, TypeScript, React Query, TailwindCSS
 - **AI**: OpenAI Compatible API
-- **交易所**: Binance, OKX, Bybit
+- **交易所**: 目前支持Binance, OKX；待支持：Bybit
