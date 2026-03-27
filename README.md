@@ -17,10 +17,9 @@
 
 随着 AI 模型能力的快速迭代，特别是**多模态能力**（视觉理解）的出现，让我们可以：
 
-- 使用**自然语言编写交易规则**，无需懂得编程
+- 使用**自然语言编写交易规则**，无需懂得编程，即可让 Agent 自动看盘并交易
 - Agent 根据交易规则**自行调用工具**完成任务
 - 通过修改交易规则，即可快速验证新的交易策略，无需重新编写复杂的量化程序代码
-注：本项目必须在支持视觉理解的 AI 模型上运行，如国产的Doubao-Seed-2.0-pro，Qwen-3.5-Plus。
 
 ### 核心特性
 
@@ -110,7 +109,7 @@ cp .env.example .env
   <img src="img/img2.jpg" alt="Architecture" width="800"/>
 </p>
 
-> ⚠️ **重要**: 必须使用具有**图片理解能力**的模型（如 GPT-4V、Claude Vision、Moonshot K2.5 、Doubao-Seed-2.0-pro、Qwen-3.5-Plus 等），因为 Agent 需要读取 K 线图表。
+> ⚠️ **重要**: 必须使用具有**图片理解能力**的模型（如 GPT-4V、Claude Vision、Kimi-K2.5 、Doubao-Seed-2.0-pro、Qwen-3.5-Plus 等），因为 Agent 需要读取 K 线图表。
 
 进入「模型设置」页：
 - 点击「添加模型」
