@@ -138,8 +138,8 @@ fi
 # 激活虚拟环境
 echo -e "${YELLOW}📦 安装 Python 依赖...${NC}"
 source venv/bin/activate
-pip install --upgrade pip
-pip install -r requirements.txt
+python -m pip install --upgrade pip
+python -m pip install -r requirements.txt
 echo -e "${GREEN}✓ Python 依赖安装完成${NC}"
 echo ""
 
